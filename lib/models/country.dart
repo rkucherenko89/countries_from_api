@@ -14,11 +14,11 @@ class Country {
         /// Верхняя часть для апишки версии 3.1. Нижняя для версии 2.
         /// Для переключения надо поменять адресс [CountriesApi]
        
-        // name: json['name']['common'],
-        // fullName: json['name']['official'],
-        // flagUrl: json['flags']['png'],
-        name: json['name'],
-        fullName: json['capital'] ?? '',
+        name: json['name']['common'],
+        fullName: json['name']['official'],
         flagUrl: json['flags']['png'],
+        // name: json['name'],
+        // fullName: json['capital'] ?? '',
+        // flagUrl: json['flags']['png'],
       );
 }

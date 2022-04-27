@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class CountriesApi {
   static Future<List<Country>> getCoutries(String query) async {
-    final response = await http.get(Uri.https('restcountries.com', 'v2/all'));
+    final response = await http.get(Uri.https('restcountries.com', 'v3.1/all'));
     if (response.statusCode == 200) {
       final List countries = jsonDecode(response.body);
       return countries.map((json) => Country.fromJson(json)).where((country) {
@@ -15,7 +15,7 @@ class CountriesApi {
 
         return nameLower.contains(searchLower) ||
             fullNameLower.contains(searchLower);
-      }).toList();
+      }).toList()..sort((a, b) => a.name.compareTo(b.name));
     } else {
       throw Exception();
     }

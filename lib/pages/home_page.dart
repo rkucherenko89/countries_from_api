@@ -38,27 +38,34 @@ class _HomePageState extends State<HomePage> {
         children: [
           buildSearch(),
           Expanded(
-            child: ListView.builder(
-                itemCount: countries.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final country = countries.elementAt(index);
-                  return buildCountry(country);
-                }),
+            child: ListView.separated(
+              itemCount: countries.length,
+              itemBuilder: (BuildContext context, int index) {
+                final country = countries.elementAt(index);
+                return buildCountry(country);
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const Divider();
+              },
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget buildCountry(Country country) => ListTile(
-        leading: Image.network(
-          country.flagUrl,
-          fit: BoxFit.contain,
-          width: 50,
-          height: 50,
+  Widget buildCountry(Country country) => GestureDetector(
+        onTap: () {},
+        child: ListTile(
+          leading: Image.network(
+            country.flagUrl,
+            fit: BoxFit.contain,
+            width: 50,
+            height: 50,
+          ),
+          title: Text(country.name),
+          subtitle: Text(country.fullName),
         ),
-        title: Text(country.name),
-        subtitle: Text(country.fullName),
       );
 
   Widget buildSearch() => SearchWidget(
