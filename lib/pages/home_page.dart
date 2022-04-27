@@ -1,6 +1,8 @@
+
 import 'package:countries_from_api/api/countries_api.dart';
 import 'package:countries_from_api/main.dart';
 import 'package:countries_from_api/models/country.dart';
+import 'package:countries_from_api/widgets/country_card.dart';
 import 'package:countries_from_api/widgets/search_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -55,7 +57,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildCountry(Country country) => GestureDetector(
-        onTap: () {},
+        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => CountryCard(flag: country.flagUrl))),
         child: ListTile(
           leading: Image.network(
             country.flagUrl,
