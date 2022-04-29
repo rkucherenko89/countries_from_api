@@ -1,7 +1,6 @@
-
 import 'package:countries_from_api/api/countries_api.dart';
-import 'package:countries_from_api/main.dart';
 import 'package:countries_from_api/models/country.dart';
+import 'package:countries_from_api/theme/app_theme.dart';
 import 'package:countries_from_api/widgets/country_card.dart';
 import 'package:countries_from_api/widgets/search_widget.dart';
 import 'package:flutter/material.dart';
@@ -32,32 +31,51 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(MyApp.title),
-      ),
-      body: Column(
-        children: [
-          buildSearch(),
-          Expanded(
-            child: ListView.separated(
-              itemCount: countries.length,
-              itemBuilder: (BuildContext context, int index) {
-                final country = countries.elementAt(index);
-                return buildCountry(country);
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const Divider();
-              },
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            buildBackground(),
+            Column(
+              children: [
+                buildSearch(),
+                buildListView(),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Expanded buildListView() {
+    return Expanded(
+      child: ListView.separated(
+        itemCount: countries.length,
+        itemBuilder: (BuildContext context, int index) {
+          final country = countries.elementAt(index);
+          return buildCountry(country);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
+        },
+      ),
+    );
+  }
+
+  Container buildBackground() {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(AppTheme.paperBackgroundUrl),
+          fit: BoxFit.fitHeight,
+        ),
       ),
     );
   }
 
   Widget buildCountry(Country country) => GestureDetector(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => CountryCard(flag: country.flagUrl))),
+        onTap: () => openCountryCard(country),
         child: ListTile(
           leading: Image.network(
             country.flagUrl,
@@ -82,5 +100,13 @@ class _HomePageState extends State<HomePage> {
       this.query = query;
       this.countries = countries;
     });
+  }
+
+  void openCountryCard(Country country) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CountryCard(country: country),
+      ),
+    );
   }
 }

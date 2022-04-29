@@ -1,6 +1,7 @@
 import 'package:countries_from_api/pages/home_page.dart';
 import 'package:countries_from_api/widgets/country_card.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,11 +18,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        // textTheme: GoogleFonts.whisperTextTheme(),
       ),
       initialRoute: '/',
       routes: {
         '/countryPage': (context) => HomePage(),
-        // CountryCard(flag: 'https://flagpedia.net/data/flags/w580/us.png'),
       },
       home: const HomePage(),
     );
