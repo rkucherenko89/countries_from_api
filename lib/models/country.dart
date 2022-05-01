@@ -6,7 +6,7 @@ class Country {
   final String domain;
   final int population;
   final double area;
-  final String languages;
+  final List languages;
   final String currencies;
   final String timezones;
   final String continents;
@@ -32,10 +32,10 @@ class Country {
         fullName: json['name']['official'],
         flagUrl: json['flags']['png'],
         capital: json['capital']?[0] ?? '',
-        domain: json['tld']?[0] ?? 'ggg',
+        domain: json['tld']?[0] ?? '',
         population: json['population'],
         area: json['area'],
-        languages: json['languages']?.values.join(', ') ?? '',
+        languages: json['languages']?.values.toList() ?? [],
         currencies: json['currencies']?.values.elementAt(0)?['name'] ?? '',
         timezones: json['timezones']?.join(', ') ?? '',
         continents: json['continents']?.join(', ') ?? '',

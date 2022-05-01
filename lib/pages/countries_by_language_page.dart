@@ -2,20 +2,21 @@ import 'package:countries_from_api/api/countries_api.dart';
 import 'package:countries_from_api/models/country.dart';
 import 'package:countries_from_api/theme/app_theme.dart';
 import 'package:countries_from_api/widgets/country_card.dart';
-import 'package:countries_from_api/widgets/search_widget.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class CountriesByLanguage extends StatefulWidget {
+  final String query;
+  const CountriesByLanguage({
+    Key? key,
+    required this.query,
+  }) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<CountriesByLanguage> createState() => _CountriesByLanguageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _CountriesByLanguageState extends State<CountriesByLanguage> {
   List countries = [];
-  String query = '';
 
   @override
   void initState() {
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future init() async {
-    final countries = await CountriesApi.getCoutries(query);
+    final countries = await CountriesApi.getCoutriesByLanguage(widget.query);
     setState(() {
       this.countries = countries;
     });
@@ -39,7 +40,6 @@ class _HomePageState extends State<HomePage> {
             AppTheme.buildBackground(),
             Column(
               children: [
-                buildSearch(),
                 buildListView(),
               ],
             ),
@@ -77,20 +77,6 @@ class _HomePageState extends State<HomePage> {
           subtitle: Text(country.fullName),
         ),
       );
-
-  Widget buildSearch() => SearchWidget(
-        text: query,
-        onChanged: searchCountry,
-        hintText: 'Type country name',
-      );
-
-  void searchCountry(String query) async {
-    final countries = await CountriesApi.getCoutries(query);
-    setState(() {
-      this.query = query;
-      this.countries = countries;
-    });
-  }
 
   void openCountryCard(Country country) {
     Navigator.of(context).push(
