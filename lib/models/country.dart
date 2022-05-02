@@ -9,7 +9,8 @@ class Country {
   final List languages;
   final String currencies;
   final String timezones;
-  final String continents;
+  final String region;
+  final String subregion;
   final String borders;
 
   Country({
@@ -23,7 +24,8 @@ class Country {
     required this.languages,
     required this.currencies,
     required this.timezones,
-    required this.continents,
+    required this.region,
+    required this.subregion,
     required this.borders,
   });
 
@@ -38,7 +40,8 @@ class Country {
         languages: json['languages']?.values.toList() ?? [],
         currencies: json['currencies']?.values.elementAt(0)?['name'] ?? '',
         timezones: json['timezones']?.join(', ') ?? '',
-        continents: json['continents']?.join(', ') ?? '',
+        region: json['region'] ?? '',
+        subregion: json['subregion'] ?? '',
         borders: json['borders']?.join(', ') ?? '',
       );
 }

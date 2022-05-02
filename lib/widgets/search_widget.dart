@@ -24,23 +24,26 @@ class _SearchWidgetState extends State<SearchWidget> {
     const styleHint = TextStyle(color: Colors.black);
     final style = widget.text.isEmpty ? styleHint : styleActiv;
 
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        icon: Icon(Icons.search, color: style.color),
-        suffixIcon: widget.text.isNotEmpty
-            ? GestureDetector(
-                child: Icon(Icons.close, color: style.color),
-                onTap: () {
-                  controller.clear();
-                  widget.onChanged('');
-                  FocusScope.of(context).requestFocus(FocusNode());
-                },
-              )
-            : null,
-        hintText: widget.hintText,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          icon: Icon(Icons.search, color: style.color),
+          suffixIcon: widget.text.isNotEmpty
+              ? GestureDetector(
+                  child: Icon(Icons.close, color: style.color),
+                  onTap: () {
+                    controller.clear();
+                    widget.onChanged('');
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                )
+              : null,
+          hintText: widget.hintText,
+        ),
+        onChanged: widget.onChanged,
       ),
-      onChanged: widget.onChanged,
     );
   }
 }

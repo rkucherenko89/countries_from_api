@@ -1,9 +1,13 @@
 import 'package:countries_from_api/models/country.dart';
+import 'package:countries_from_api/pages/countries_by_currencies.dart';
 import 'package:countries_from_api/pages/countries_by_language_page.dart';
+import 'package:countries_from_api/pages/countries_by_region.dart';
+import 'package:countries_from_api/pages/countries_by_subregion.dart';
 import 'package:countries_from_api/pages/hero_flag_page.dart';
 import 'package:countries_from_api/theme/app_theme.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CountryCard extends StatefulWidget {
   final Country country;
@@ -20,7 +24,6 @@ class CountryCard extends StatefulWidget {
 class _CountryCardState extends State<CountryCard> {
   @override
   Widget build(BuildContext context) {
-    const TextStyle textStyle = TextStyle(fontSize: 20);
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -45,7 +48,8 @@ class _CountryCardState extends State<CountryCard> {
   }
 
   Widget buildCountryCard(BuildContext context) {
-    const TextStyle textStyle = TextStyle(fontSize: 24, color: Colors.black);
+    final TextStyle textStyle = GoogleFonts.akayaTelivigala(
+        textStyle: const TextStyle(fontSize: 24, color: Colors.black));
 
     return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -85,12 +89,13 @@ class _CountryCardState extends State<CountryCard> {
                         widget.country.name,
                         maxLines: 3,
                         overflow: TextOverflow.clip,
-                        style: TextStyle(fontSize: 24),
+                        style: const TextStyle(fontSize: 28),
                       ),
                       Text(
                         widget.country.fullName,
                         maxLines: 5,
                         overflow: TextOverflow.clip,
+                        style: const TextStyle(fontSize: 20),
                       ),
                     ],
                   ),
@@ -124,11 +129,14 @@ class _CountryCardState extends State<CountryCard> {
                 style: textStyle,
                 children: [
                   const TextSpan(text: 'Languages: '),
-                  for (var item in widget.country.languages)
+                  for (int i = 0; i < widget.country.languages.length; i++)
                     TextSpan(
-                      text: '$item, ',
+                      text: i == widget.country.languages.length - 1
+                          ? '${widget.country.languages[i]}'
+                          : '${widget.country.languages[i]}, ',
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () => openCountriesByLanguage(item),
+                        ..onTap = () => openCountriesByLanguage(
+                            widget.country.languages[i]),
                     ),
                 ],
               ),
@@ -136,8 +144,19 @@ class _CountryCardState extends State<CountryCard> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text('Currencies: ${widget.country.currencies}',
-                style: textStyle),
+            child: RichText(
+              text: TextSpan(
+                style: textStyle,
+                children: [
+                  TextSpan(
+                    text: 'Currencies: ${widget.country.currencies}',
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () =>
+                          openCoutriesByCurrencies(widget.country.currencies),
+                  ),
+                ],
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -146,8 +165,26 @@ class _CountryCardState extends State<CountryCard> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text('Continents: ${widget.country.continents}',
-                style: textStyle),
+            child: RichText(
+              text: TextSpan(
+                style: textStyle,
+                children: [
+                  TextSpan(
+                    text: 'Location: ${widget.country.region}',
+                    recognizer: TapGestureRecognizer()
+                      ..onTap =
+                          () => openCoutriesByRegion(widget.country.region),
+                  ),
+                  const TextSpan(text: ' - '),
+                  TextSpan(
+                    text: widget.country.subregion,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () =>
+                          openCoutriesBySubregion(widget.country.subregion),
+                  ),
+                ],
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -159,10 +196,33 @@ class _CountryCardState extends State<CountryCard> {
   }
 
   void openCountriesByLanguage(String query) {
-    print(query);
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CountriesByLanguage(query: query),
+      ),
+    );
+  }
+
+  void openCoutriesByCurrencies(String query) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CountriesByCurrencies(query: query),
+      ),
+    );
+  }
+
+  void openCoutriesByRegion(String query) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CountriesByRegion(query: query),
+      ),
+    );
+  }
+
+  void openCoutriesBySubregion(String query) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CountriesBySubregion(query: query),
       ),
     );
   }

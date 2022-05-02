@@ -4,18 +4,18 @@ import 'package:countries_from_api/theme/app_theme.dart';
 import 'package:countries_from_api/widgets/country_card.dart';
 import 'package:flutter/material.dart';
 
-class CountriesByLanguage extends StatefulWidget {
+class CountriesByCurrencies extends StatefulWidget {
   final String query;
-  const CountriesByLanguage({
+  const CountriesByCurrencies({
     Key? key,
     required this.query,
   }) : super(key: key);
 
   @override
-  State<CountriesByLanguage> createState() => _CountriesByLanguageState();
+  State<CountriesByCurrencies> createState() => _CountriesByCurrenciesState();
 }
 
-class _CountriesByLanguageState extends State<CountriesByLanguage> {
+class _CountriesByCurrenciesState extends State<CountriesByCurrencies> {
   List countries = [];
 
   @override
@@ -25,7 +25,7 @@ class _CountriesByLanguageState extends State<CountriesByLanguage> {
   }
 
   Future init() async {
-    final countries = await CountriesApi.getCoutriesByLanguage(widget.query);
+    final countries = await CountriesApi.getCoutriesByCurrencies(widget.query);
     setState(() {
       this.countries = countries;
     });
@@ -59,7 +59,7 @@ class _CountriesByLanguageState extends State<CountriesByLanguage> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Text(
-        'Countries where ${widget.query} language is used',
+        'Countries where ${widget.query} currencie is used',
         style: style,
         textAlign: TextAlign.center,
       ),

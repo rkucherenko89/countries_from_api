@@ -1,5 +1,4 @@
 import 'package:countries_from_api/pages/home_page.dart';
-import 'package:countries_from_api/widgets/country_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,12 +16,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        // textTheme: GoogleFonts.whisperTextTheme(),
-      ),
+          primarySwatch: Colors.blue,
+          textTheme: GoogleFonts.akayaTelivigalaTextTheme(
+            Theme.of(context).textTheme,
+          )),
       initialRoute: '/',
       routes: {
-        '/countryPage': (context) => HomePage(),
+        '/countryPage': (context) => const HomePage(),
       },
       home: const HomePage(),
     );
