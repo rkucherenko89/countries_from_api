@@ -27,8 +27,47 @@ class CountriesApi {
         await http.get(Uri.https('restcountries.com', 'v3.1/lang/$query'));
     if (response.statusCode == 200) {
       final List countries = jsonDecode(response.body);
-      return countries.map((json) => Country.fromJson(json)).toList();
-      // ..sort((a, b) => a.name.compareTo(b.name));
+      return countries.map((json) => Country.fromJson(json)).toList()
+        ..sort((a, b) => a.name.compareTo(b.name));
+    } else {
+      throw Exception();
+    }
+  }
+
+  static Future<List<Country>> getCoutriesByCurrencies(String query) async {
+    query = query.toLowerCase();
+    final response =
+        await http.get(Uri.https('restcountries.com', 'v3.1/currency/$query'));
+    if (response.statusCode == 200) {
+      final List countries = jsonDecode(response.body);
+      return countries.map((json) => Country.fromJson(json)).toList()
+        ..sort((a, b) => a.name.compareTo(b.name));
+    } else {
+      throw Exception();
+    }
+  }
+
+  static Future<List<Country>> getCoutriesByRegion(String query) async {
+    query = query.toLowerCase();
+    final response =
+        await http.get(Uri.https('restcountries.com', 'v3.1/region/$query'));
+    if (response.statusCode == 200) {
+      final List countries = jsonDecode(response.body);
+      return countries.map((json) => Country.fromJson(json)).toList()
+        ..sort((a, b) => a.name.compareTo(b.name));
+    } else {
+      throw Exception();
+    }
+  }
+
+  static Future<List<Country>> getCoutriesBySubregion(String query) async {
+    query = query.toLowerCase();
+    final response =
+        await http.get(Uri.https('restcountries.com', 'v3.1/subregion/$query'));
+    if (response.statusCode == 200) {
+      final List countries = jsonDecode(response.body);
+      return countries.map((json) => Country.fromJson(json)).toList()
+        ..sort((a, b) => a.name.compareTo(b.name));
     } else {
       throw Exception();
     }

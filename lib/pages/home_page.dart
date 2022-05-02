@@ -3,7 +3,6 @@ import 'package:countries_from_api/models/country.dart';
 import 'package:countries_from_api/theme/app_theme.dart';
 import 'package:countries_from_api/widgets/country_card.dart';
 import 'package:countries_from_api/widgets/search_widget.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,11 +36,14 @@ class _HomePageState extends State<HomePage> {
         body: Stack(
           children: [
             AppTheme.buildBackground(),
-            Column(
-              children: [
-                buildSearch(),
-                buildListView(),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  buildSearch(),
+                  buildListView(),
+                ],
+              ),
             ),
           ],
         ),
