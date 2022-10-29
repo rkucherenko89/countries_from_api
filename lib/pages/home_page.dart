@@ -67,24 +67,24 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildCountry(Country country) => GestureDetector(
-        onTap: () => openCountryCard(country),
-        child: ListTile(
-          leading: Image.network(
-            country.flagUrl,
-            fit: BoxFit.contain,
-            width: 50,
-            height: 50,
-          ),
-          title: Text(country.name),
-          subtitle: Text(country.fullName),
-        ),
-      );
+    onTap: () => openCountryCard(country),
+    child: ListTile(
+      leading: Image.network(
+        country.flagUrl,
+        fit: BoxFit.contain,
+        width: 50,
+        height: 50,
+      ),
+      title: Text(country.name),
+      subtitle: Text(country.fullName),
+    ),
+  );
 
   Widget buildSearch() => SearchWidget(
-        text: query,
-        onChanged: searchCountry,
-        hintText: 'Type country name',
-      );
+    text: query,
+    onChanged: searchCountry,
+    hintText: 'Type country name',
+  );
 
   void searchCountry(String query) async {
     final countries = await CountriesApi.getCoutries(query);
